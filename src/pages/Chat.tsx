@@ -4,6 +4,7 @@ import { Layout } from '../components/Layout';
 import { ConversationList } from '../components/ConversationList';
 import { ChatMessages } from '../components/ChatMessages';
 import { ChatInput } from '../components/ChatInput';
+import { TypingIndicator } from '../components/TypingIndicator';
 import { useBotStore } from '../store/useBotStore';
 import { useConversationStore } from '../store/useConversationStore';
 import { sendMessage } from '../services/api';
@@ -74,7 +75,10 @@ export function Chat() {
           <ConversationList botId={botId} />
         </div>
         <div className="flex-1 flex flex-col bg-gray-50 dark:bg-gray-900 transition-colors">
-          <ChatMessages messages={conversation.messages} botName={bot.name} />
+          <div className="flex-1 overflow-y-auto p-4">
+            <ChatMessages messages={conversation.messages} botName={bot.name} />
+            {isLoading && <TypingIndicator botName={bot.name} />}
+          </div>
           <ChatInput onSendMessage={handleSendMessage} disabled={isLoading} />
         </div>
       </div>
