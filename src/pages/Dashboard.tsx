@@ -11,9 +11,9 @@ export function Dashboard() {
 
   return (
     <Layout>
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 overflow-y-auto h-[calc(100vh-8rem)]">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold text-gray-900">Meus Bots</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Meus Bots</h1>
           <button
             onClick={() => setShowNewBotForm(true)}
             className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"

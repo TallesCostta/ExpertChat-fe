@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Bot as BotIcon, Trash2, Edit } from 'lucide-react';
 import { Bot } from '../types';
 import { useBotStore } from '../store/useBotStore';
@@ -10,13 +10,23 @@ interface BotCardProps {
 }
 
 export function BotCard({ bot }: BotCardProps) {
+  const navigate = useNavigate();
   const [isEditing, setIsEditing] = React.useState(false);
   const [name, setName] = React.useState(bot.name);
   const { removeBot, updateBot } = useBotStore();
-  const { addConversation } = useConversationStore();
+  const { addConversation, conversations } = useConversationStore();
 
   const handleStartChat = () => {
-    addConversation(bot.id);
+    const existingConversation = conversations.find(
+      (conv) => conv.botId === bot.id && !conv.archived
+    );
+
+    if (existingConversation) {
+      navigate(`/chat/${bot.id}`);
+    } else {
+      const conversationId = addConversation(bot.id);
+      navigate(`/chat/${bot.id}`);
+    }
   };
 
   const handleSave = () => {
@@ -25,7 +35,7 @@ export function BotCard({ bot }: BotCardProps) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6 hover:shadow-md transition-shadow">
       <div className="flex items-start justify-between">
         <div className="flex items-center space-x-3">
           <BotIcon className="h-8 w-8 text-blue-600" />
@@ -36,39 +46,38 @@ export function BotCard({ bot }: BotCardProps) {
               onChange={(e) => setName(e.target.value)}
               onBlur={handleSave}
               onKeyPress={(e) => e.key === 'Enter' && handleSave()}
-              className="border rounded px-2 py-1"
+              className="border rounded px-2 py-1 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
               autoFocus
             />
           ) : (
-            <h3 className="text-lg font-medium text-gray-900">{bot.name}</h3>
+            <h3 className="text-lg font-medium text-gray-900 dark:text-white">{bot.name}</h3>
           )}
         </div>
         <div className="flex space-x-2">
           <button
             onClick={() => setIsEditing(!isEditing)}
-            className="text-gray-400 hover:text-gray-600"
+            className="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300"
           >
             <Edit className="h-5 w-5" />
           </button>
           <button
             onClick={() => removeBot(bot.id)}
-            className="text-gray-400 hover:text-red-600"
+            className="text-gray-400 hover:text-red-600 dark:hover:text-red-400"
           >
             <Trash2 className="h-5 w-5" />
           </button>
         </div>
       </div>
       <div className="mt-4">
-        <p className="text-sm text-gray-500">Categoria: {bot.category}</p>
-        <p className="text-sm text-gray-500">Especialidade: {bot.specialty}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Categoria: {bot.category}</p>
+        <p className="text-sm text-gray-500 dark:text-gray-400">Especialidade: {bot.specialty}</p>
       </div>
-      <Link
-        to={`/chat/${bot.id}`}
+      <button
         onClick={handleStartChat}
         className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700"
       >
         Iniciar Chat
-      </Link>
+      </button>
     </div>
   );
 }
