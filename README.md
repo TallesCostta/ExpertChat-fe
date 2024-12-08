@@ -26,7 +26,7 @@ Este repositório contém a implementação do front-end para a criação de cha
 
 ## 🌎 Acesse o projeto no navegador
 
-O projeto estará disponível em [https://jovial-scone-0da17a.netlify.app](https://jovial-scone-0da17a.netlify.app).
+O projeto estará disponível em [https://fancy-chimera-3c950b.netlify.app](https://fancy-chimera-3c950b.netlify.app/dashboard).
 
 ---
 
