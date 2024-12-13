@@ -1,3 +1,36 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.p-calendar .p-button {
+  width: 3rem !important;
+  height: 2.5rem !important;
+}
+
+.p-calendar .p-button-icon {
+  font-size: 1.25rem !important;
+}
+
+.p-calendar .p-datepicker-trigger {
+  background: transparent !important;
+  border: none !important;
+  color: #2563eb !important;
+}
+
+.p-calendar .p-datepicker-trigger:hover {
+  background: #F3F4F6 !important;
+  color: #1d4ed8 !important;
+}
+
+.dark .p-calendar .p-datepicker-trigger:hover {
+  background: #374151 !important;
+  color: #60a5fa !important;
+}
+
+.p-calendar .p-inputtext {
+  padding-right: 3rem !important;
+}
+
+.p-inputmask {
+  width: 100% !important;
+}

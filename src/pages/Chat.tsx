@@ -7,7 +7,8 @@ import { ChatInput } from '../components/ChatInput';
 import { TypingIndicator } from '../components/TypingIndicator';
 import { useBotStore } from '../store/useBotStore';
 import { useConversationStore } from '../store/useConversationStore';
-import { sendMessage } from '../services/api';
+import { sendMessage } from '../services/api/messages';
+import { getErrorMessage } from '../utils/errors';
 import { ArrowLeft } from 'lucide-react';
 
 export function Chat() {
@@ -43,8 +44,9 @@ export function Chat() {
       });
     } catch (error) {
       console.error('Error sending message:', error);
+      const errorMessage = getErrorMessage(error);
       addMessage(conversation.id, {
-        content: 'Desculpe, ocorreu um erro ao processar sua mensagem. Por favor, tente novamente mais tarde.',
+        content: `Desculpe, ${errorMessage}`,
         sender: 'bot',
         timestamp: new Date(),
       });
